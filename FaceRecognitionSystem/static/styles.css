@@ -1,0 +1,352 @@
+/* Centralized styles.css for Surveillance System */
+
+body {
+  font-family: 'Open Sans', Arial, sans-serif;
+  margin: 0;
+  background-color: #ECF0F1;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.hidden {
+  display: none;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #2C3E50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: inline-block;
+  width: auto;
+  max-width: fit-content;
+}
+
+button:hover {
+  background-color: #34495E;
+}
+
+input, select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #BDC3C7;
+  border-radius: 4px;
+}
+
+header {
+  background-color: #FFFFFF;
+  color: #000000;
+  padding: 1rem;
+  font-size: 2rem;
+  text-align: center;
+  text-transform: uppercase;
+  z-index: 10;
+  width: calc(100% - 250px);
+  margin-left: 250px;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #2C3E50;
+  color: white;
+  padding: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  height: 100vh;
+  overflow-y: auto;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar a {
+  display: block;
+  padding: 0.5rem;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.sidebar a:hover, .sidebar a.active {
+  background-color: #34495E;
+}
+
+main {
+  flex: 1;
+  margin-left: 250px;
+  padding: 1.5rem;
+}
+
+.card {
+  background-color: #ECF0F1;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.camera-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Specific styles for the camera feed container */
+.camera-feed {
+  position: relative; /* Crucial for positioning canvas and overlay */
+  background-color: #34495E;
+  color: white;
+  display: flex; /* Changed to flex for better internal alignment */
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  height: 480px; /* Match video/canvas height */
+  width: 640px; /* Match video/canvas width */
+  border-radius: 10px;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  overflow: hidden; /* Hide anything outside the bounds */
+}
+
+.camera-feed:hover {
+  transform: scale(1.02);
+}
+
+/* Styles for video and canvas elements */
+.camera-feed video, .camera-feed canvas {
+  display: block;
+  /* Removed margin: 10px auto; as absolute positioning handles it */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: black;
+  /* position: absolute; top: 0; left: 0; width: 100%; height: 100%; are set dynamically via JS for precision */
+}
+
+/* Overlay for bounding boxes */
+.detection-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Allows clicks to pass through to elements below */
+  overflow: hidden; /* Ensure bounding boxes don't spill out */
+}
+
+/* Bounding box styles */
+.bounding-box {
+  position: absolute;
+  border: 2px solid;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  pointer-events: none; /* Make it non-interactive */
+  font-size: 14px;
+  font-weight: bold;
+  text-align: left;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+  padding: 2px 5px; /* Padding for text inside box */
+  border-radius: 3px; /* Slightly rounded corners for boxes */
+  display: flex; /* For text positioning */
+  align-items: flex-start; /* Align text to top of box */
+  justify-content: flex-start; /* Align text to left of box */
+}
+
+.bounding-box span {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for text */
+    padding: 2px 5px;
+    border-radius: 3px;
+    line-height: 1; /* Compact line height */
+}
+
+.bounding-box.unknown {
+  border-color: red;
+  color: red;
+}
+.bounding-box.known {
+  border-color: limegreen;
+  color: limegreen;
+}
+
+/* Alarm indicator text */
+.alarm-indicator {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 1.5em; /* Increased size for prominence */
+  animation: pulse 1s infinite alternate; /* Simple pulse animation */
+}
+
+@keyframes pulse {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(1.05); opacity: 0.8; }
+}
+
+
+.alert {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.alert.error {
+  background-color: #FADBD8;
+  color: #E74C3C;
+}
+
+.alert.warning {
+  background-color: #F9E79F;
+  color: #D4AC0D;
+}
+
+/* Renamed 'error' to 'danger' for consistency with common frameworks */
+.alert.danger {
+  background-color: #fdeded;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+.alert.info {
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+  color: #0c5460;
+}
+.alert.success {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+/* Flask Flash Messages Styling */
+.flash-messages {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+.flash-messages li {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+.flash-messages li.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+.flash-messages li.danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+.flash-messages li.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+
+/* Removed specific button styles like acknowledge-btn, verify-btn, dismiss-btn
+   as they don't seem to be used in the current HTML/JS for this context.
+   If you need them, re-add them. */
+
+.dark-mode-toggle {
+  margin-top: 1rem;
+}
+
+body.dark-mode {
+  background-color: #2C3E50;
+  color: #ECF0F1;
+}
+
+body.dark-mode header {
+  background-color: #34495E;
+  color: #ECF0F1;
+}
+
+body.dark-mode .card {
+  background-color: #34495E;
+}
+
+body.dark-mode .alert.error, /* Keep existing error style for backward compatibility */
+body.dark-mode .alert.danger { /* New danger style */
+  background-color: #6E2C00;
+  color: #FADBD8;
+}
+
+body.dark-mode .alert.warning {
+  background-color: #7D6608;
+  color: #F9E79F;
+}
+
+body.dark-mode .alert.info {
+  background-color: #2d4a4d;
+  border-color: #3e6a6e;
+  color: #d1ecf1;
+}
+body.dark-mode .alert.success {
+  background-color: #354a3d;
+  border-color: #4c6a54;
+  color: #d4edda;
+}
+
+body.dark-mode .camera-feed {
+  background-color: #5D6D7E;
+}
+
+body.dark-mode .sidebar {
+  background-color: #1B2631;
+}
+
+/* Dark Mode for Flash Messages */
+body.dark-mode .flash-messages li.success {
+    background-color: #354a3d;
+    color: #d4edda;
+    border-color: #4c6a54;
+}
+body.dark-mode .flash-messages li.danger {
+    background-color: #4a2d30;
+    color: #f8d7da;
+    border-color: #6a3e42;
+}
+body.dark-mode .flash-messages li.info {
+    background-color: #2d4a4d;
+    color: #d1ecf1;
+    border-color: #3e6a6e;
+}
+
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+  }
+  main {
+    margin-left: 0;
+  }
+  .camera-grid {
+    grid-template-columns: 1fr;
+  }
+  .camera-feed {
+    height: 400px; /* Adjusted for better mobile view if video is 480px tall */
+    width: auto; /* Allow width to be fluid */
+  }
+}

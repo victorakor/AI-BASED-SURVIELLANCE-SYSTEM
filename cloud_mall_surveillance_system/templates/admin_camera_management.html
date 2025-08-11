@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Camera Management - Mall Surveillance System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+    <script type="module" src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <!-- The main container for the entire application -->
+    <div class="app-container">
+        <!-- Sidebar - Stays on the left side of the page -->
+        <aside class="sidebar">
+            <div class="profile">
+                <img src="https://placehold.co/80x80/2C3E50/FFFFFF?text=A" alt="Admin Profile Picture">
+                <p>Admin</p>
+                <p class="user-id-display">User ID: <span id="user-id"></span></p>
+            </div>
+            <nav>
+                <ul id="sidebar-menu">
+                    <li><a href="{{ url_for('admin_overview_page') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="{{ url_for('admin_camera_management_page') }}" class="active"><i class="fas fa-video"></i> Camera Management</a></li>
+                    <li><a href="{{ url_for('admin_alerts_page') }}"><i class="fas fa-bell"></i> Alerts</a></li>
+                    <li><a href="{{ url_for('admin_threat_config_page') }}"><i class="fas fa-exclamation-triangle"></i> Threat Configuration</a></li>
+                    <li><a href="{{ url_for('admin_activity_log_page') }}"><i class="fas fa-history"></i> Activity Log</a></li>
+                    <li><a href="{{ url_for('admin_settings_page') }}"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+            <div class="logout-btn">
+                <a href="{{ url_for('logout') }}" id="logout-button"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+            <div class="dark-mode-toggle">
+                <label><input type="checkbox" id="dark-mode-toggle"> Dark Mode</label>
+            </div>
+        </aside>
+
+        <!-- Main content area - Stays on the right side of the page -->
+        <div class="main-content">
+            <header>
+                <h1>Camera Management</h1>
+            </header>
+            <main>
+                <section class="table-section">
+                    <div class="section-header">
+                        <h2>Current Cameras</h2>
+                        <button id="add-camera-btn" class="save-button">Add New Camera</button>
+                    </div>
+                    <table id="camera-table">
+                        <thead>
+                            <tr>
+                                <th>Camera Name</th>
+                                <th>RTSP URL</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="camera-table-body">
+                            <!-- Camera data will be dynamically populated here -->
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal for adding/editing a camera -->
+    <div id="camera-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="modal-title">Add New Camera</h2>
+            <form id="camera-form">
+                <input type="hidden" id="camera-id" name="camera-id">
+                <div class="form-group">
+                    <label for="camera-name">Camera Name:</label>
+                    <input type="text" id="camera-name" name="camera-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="rtsp-url">RTSP URL:</label>
+                    <input type="text" id="rtsp-url" name="rtsp-url" required placeholder="rtsp://username:password@camera-ip:554/stream">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="save-button" id="save-camera-btn">Save Camera</button>
+                    <button type="button" class="cancel-button" id="cancel-camera-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

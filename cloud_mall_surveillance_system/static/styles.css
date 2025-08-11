@@ -1,0 +1,654 @@
+/* Centralized styles.css for Surveillance System */
+
+/* Global Variables for theming */
+:root {
+    --primary-color: #2C3E50;
+    --secondary-color: #34495E;
+    --text-color: #000;
+    --background-color: #ECF0F1;
+    --card-background: #FFFFFF;
+    --sidebar-background: #2C3E50;
+    --button-background: #3498DB;
+    --button-text-color: white;
+    --button-hover-background: #2980B9;
+    --border-color: #BDC3C7;
+    --input-background: #FFFFFF;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --hover-color: #3498DB;
+    --alarm-color: #E74C3C;
+    --success-color: #2ECC71;
+    --warning-color: #F1C40F;
+    --info-color: #3498DB;
+    --danger-color: #C0392B;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    --primary-color: #ECF0F1;
+    --secondary-color: #5D6D7E;
+    --text-color: #ECF0F1;
+    --background-color: #1a1a1a;
+    --card-background: #2b2b2b;
+    --sidebar-background: #121212;
+    --button-background: #3498DB;
+    --button-text-color: white;
+    --button-hover-background: #2980B9;
+    --border-color: #5D6D7E;
+    --input-background: #333333;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* CORRECTED: The main container now sets the universal side-by-side layout for all pages. */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    background-color: var(--sidebar-background);
+    color: white;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s ease;
+}
+
+.sidebar .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.sidebar .profile img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid white;
+    object-fit: cover;
+}
+
+.sidebar .profile p {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar nav ul li a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: 500;
+}
+
+.sidebar nav ul li a i {
+    margin-right: 15px;
+    font-size: 1.2rem;
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li a.active {
+    background-color: var(--secondary-color);
+    transform: translateX(5px);
+}
+
+.sidebar .logout-btn {
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 20px;
+}
+
+.sidebar .logout-btn a {
+    color: var(--alarm-color);
+    font-weight: 700;
+}
+
+.sidebar .logout-btn a:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Main Content Area */
+.main-content {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background-color: var(--background-color);
+    overflow-y: auto;
+}
+
+.content {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.content header {
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.content header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+body.dark-mode .content header h1 {
+    color: var(--primary-color);
+}
+
+/* CORRECTED: This new grid places the video section and cards section in a single column. */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    flex: 1;
+}
+
+.video-section {
+    width: 100%;
+}
+
+/* CORRECTED: The cards section is now a flex container that forces cards to stay on one line. */
+.cards-section {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    align-items: stretch;
+    overflow-x: auto;
+    padding-bottom: 20px; /* Adds space for the scrollbar */
+}
+
+.card {
+    background-color: var(--card-background);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.3s ease;
+    overflow-y: auto;
+    /* CORRECTED: Cards will not grow or shrink, and have a fixed width. */
+    flex: 0 0 250px;
+    box-sizing: border-box;
+}
+
+.card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+body.dark-mode .card h2 {
+    color: var(--primary-color);
+}
+
+.camera-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.camera-feed {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    box-shadow: var(--shadow);
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.camera-feed video,
+.camera-feed canvas {
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-top: 10px;
+}
+
+.detection-overlay {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-weight: bold;
+    color: var(--alarm-color);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.alerts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.alert-item {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
+
+.alert-item:last-child {
+    border-bottom: none;
+}
+
+.alert-item.unverified {
+    background-color: #fcebeb;
+    border-left: 5px solid var(--danger-color);
+}
+
+.alert-item.verified {
+    background-color: #e8fce8;
+    border-left: 5px solid var(--success-color);
+}
+
+.alert-item.dismissed {
+    background-color: #f0f0f0;
+    border-left: 5px solid var(--border-color);
+    color: #888;
+}
+
+body.dark-mode .alert-item.unverified { background-color: #3e2d2d; }
+body.dark-mode .alert-item.verified { background-color: #2d3e2d; }
+body.dark-mode .alert-item.dismissed { background-color: #333333; }
+
+.alert-item h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+}
+
+.alert-item p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+body.dark-mode .alert-item p {
+    color: #ccc;
+}
+
+.alert-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.alert-actions button {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background-color 0.3s ease;
+}
+
+.alert-actions .verify-btn {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.alert-actions .dismiss-btn {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+/* Tables */
+.table-section {
+    width: 100%;
+}
+
+.table-section h2 {
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--card-background);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+table thead th {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
+
+table tbody tr:last-child {
+    border-bottom: none;
+}
+
+table tbody tr:hover {
+    background-color: var(--input-background);
+}
+
+table td {
+    padding: 15px;
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: var(--card-background);
+    margin: 5% auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close-btn {
+    color: var(--border-color);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: var(--danger-color);
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--input-background);
+    color: var(--text-color);
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--hover-color);
+}
+
+button.save-button,
+.alerts-controls button,
+#add-camera-form button {
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button.save-button:hover,
+.alerts-controls button:hover,
+#add-camera-form button:hover {
+    background-color: var(--button-hover-background);
+    transform: translateY(-2px);
+}
+
+.alerts-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.alerts-controls button {
+    background-color: var(--card-background);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.alerts-controls button.active {
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+    border-color: var(--button-background);
+}
+
+.level-indicator {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.level-low { background-color: var(--success-color); color: white; }
+.level-medium { background-color: var(--warning-color); color: black; }
+.level-high { background-color: var(--danger-color); color: white; }
+
+.dark-mode-toggle {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    color: white;
+}
+.dark-mode-toggle label {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.flash-messages {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.flash-messages li {
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.flash-messages li.success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.flash-messages li.error {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+    
+    .main-content {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        transform: translateX(0);
+        position: static;
+    }
+
+    .sidebar .profile {
+        flex-direction: row;
+        margin-bottom: 0;
+    }
+
+    .sidebar .profile img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .sidebar .profile p {
+        margin-left: 10px;
+    }
+
+    .sidebar nav {
+        display: none;
+    }
+
+    .content {
+        padding: 20px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Custom modal for messages */
+.message-box {
+    display: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.message-box.success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.message-box.error {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.sidebar-toggle {
+    display: none;
+    background: var(--sidebar-background);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1001;
+}
+
+/* Add this to handle the sidebar and content on smaller screens */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 0;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        position: fixed;
+        height: 100%;
+        z-index: 1000;
+    }
+    .sidebar.expanded {
+        width: 250px;
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        transition: margin-left 0.3s ease, width 0.3s ease;
+    }
+    .main-content.expanded {
+        margin-left: 250px;
+        width: calc(100% - 250px);
+    }
+    .sidebar-toggle {
+        display: block;
+    }
+    .toggle-icon-x {
+        display: none;
+    }
+    .sidebar.expanded .toggle-icon-x {
+        display: block;
+    }
+    .sidebar.expanded .toggle-icon-dots {
+        display: none;
+    }
+}

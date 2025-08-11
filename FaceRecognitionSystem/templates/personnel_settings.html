@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personnel Settings - Mall Surveillance System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="main-content">
+    <aside class="sidebar">
+      <nav>
+        <h2>Surveillance System</h2>
+        <ul id="sidebar-menu">
+          <li><a href="{{ url_for('personnel_overview_page') }}">Overview</a></li>
+          <li><a href="{{ url_for('personnel_alerts_page') }}">Alerts</a></li>
+          <li><a href="{{ url_for('personnel_settings_page') }}" class="active">Settings</a></li>
+          <li class="dark-mode-toggle">
+            <label><input type="checkbox" id="dark-mode-toggle" data-i18n="dark_mode"> Dark Mode</label>
+          </li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="content-area">
+      <header>
+        <div class="header-content">
+          <h1 data-i18n="title">AI-BASED SURVEILLANCE SYSTEM</h1>
+        </div>
+      </header>
+
+      <main>
+        <!-- Flash messages from Flask -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flash-messages">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <div class="section">
+          <div class="card">
+            <h2>Settings</h2>
+            <div class="form-group">
+              <label for="personnel-language">Language Preference</label>
+              <select id="personnel-language">
+                <option value="en">English</option>
+                <option value="fr">French</option>
+              </select>
+              <button id="save-personnel-settings">Save</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

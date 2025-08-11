@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Alerts - Mall Surveillance System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+    <script type="module" src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <!-- The main container for the entire application -->
+    <div class="app-container">
+        <!-- Sidebar - Stays on the left side of the page -->
+        <aside class="sidebar">
+            <div class="profile">
+                <img src="https://placehold.co/80x80/2C3E50/FFFFFF?text=A" alt="Admin Profile Picture">
+                <p>Admin</p>
+                <p class="user-id-display">User ID: <span id="user-id"></span></p>
+            </div>
+            <nav>
+                <ul id="sidebar-menu">
+                    <li><a href="{{ url_for('admin_overview_page') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="{{ url_for('admin_camera_management_page') }}"><i class="fas fa-video"></i> Camera Management</a></li>
+                    <li><a href="{{ url_for('admin_alerts_page') }}" class="active"><i class="fas fa-bell"></i> Alerts</a></li>
+                    <li><a href="{{ url_for('admin_threat_config_page') }}"><i class="fas fa-exclamation-triangle"></i> Threat Configuration</a></li>
+                    <li><a href="{{ url_for('admin_activity_log_page') }}"><i class="fas fa-history"></i> Activity Log</a></li>
+                    <li><a href="{{ url_for('admin_settings_page') }}"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+            <div class="logout-btn">
+                <a href="{{ url_for('logout') }}" id="logout-button"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+            <div class="dark-mode-toggle">
+                <label><input type="checkbox" id="dark-mode-toggle"> Dark Mode</label>
+            </div>
+        </aside>
+
+        <!-- Main content area - Stays on the right side of the page -->
+        <div class="main-content">
+            <header>
+                <h1>Alerts</h1>
+            </header>
+            <main>
+                <section class="alerts-section">
+                    <div class="alerts-controls">
+                        <button class="filter-btn active" data-status="all">All Alerts</button>
+                        <button class="filter-btn" data-status="unverified">Unverified</button>
+                        <button class="filter-btn" data-status="verified">Verified</button>
+                        <button class="filter-btn" data-status="dismissed">Dismissed</button>
+                    </div>
+                    <ul id="alert-list" class="alert-list">
+                        <!-- Alerts will be dynamically added here by JavaScript -->
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+    
+    <audio id="alert-sound" preload="auto">
+        <source src="{{ url_for('static', filename='police-siren-sound-effect-317645.mp3') }}" type="audio/mpeg">
+    </audio>
+</body>
+</html>

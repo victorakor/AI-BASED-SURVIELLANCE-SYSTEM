@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detection Config - Mall Surveillance System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="main-content">
+    <aside class="sidebar">
+      <nav>
+        <h2>Surveillance System</h2>
+        <ul id="sidebar-menu">
+          <li><a href="{{ url_for('admin_overview_page') }}">Overview</a></li>
+          <li><a href="{{ url_for('admin_camera_management_page') }}">Camera Management</a></li>
+          <li><a href="{{ url_for('admin_alerts_page') }}">Alerts</a></li>
+          <li><a href="{{ url_for('admin_threat_config_page') }}" class="active">Detection Config</a></li>
+          <li><a href="{{ url_for('admin_activity_log_page') }}">Activity Logs</a></li>
+          <li><a href="{{ url_for('admin_settings_page') }}">Settings</a></li>
+          <li class="dark-mode-toggle">
+            <label><input type="checkbox" id="dark-mode-toggle" data-i18n="dark_mode"> Dark Mode</label>
+          </li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="content-area">
+      <header>
+        <div class="header-content">
+          <h1 data-i18n="title">AI-BASED SURVEILLANCE SYSTEM</h1>
+        </div>
+      </header>
+
+      <main>
+        <!-- Flash messages from Flask -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flash-messages">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <div class="section">
+          <div class="card">
+            <h2>Detection Config</h2>
+            <div class="form-group">
+              <h3>Threat Level Settings</h3>
+              <select id="threat-level">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+              <button id="save-threat-level">Save</button>
+            </div>
+            <div class="form-group">
+              <h3>Camera Authorization</h3>
+              <ul id="camera-auth-list">
+                <li><label><input type="checkbox" checked> Mall Entrance - Detect Unauthorized Persons</label></li>
+                <li><label><input type="checkbox"> Electronics Store - Detect Unauthorized Persons</label></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

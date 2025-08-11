@@ -1,0 +1,210 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: #c9d6ff;
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background: #fff;
+    width: 450px;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 20px 35px rgba(0, 0, 1, 0.9);
+}
+
+form {
+    margin: 0 2rem;
+}
+
+.form-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 1.3rem;
+    margin-bottom: 0.4rem;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.input-group i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0.5rem;
+    color: #757575;
+}
+
+.input-group input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #757575;
+    padding-left: 2rem;
+    font-size: 15px;
+    color: inherit;
+    outline: none;
+}
+
+.input-group label {
+    position: absolute;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #757575;
+    font-size: 15px;
+    pointer-events: none;
+    transition: 0.2s ease-out;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: 0;
+    font-size: 12px;
+    color: #07001f;
+}
+
+.input-group input:focus {
+    border-bottom: 2px solid rgb(125, 125, 235);
+}
+
+.recover {
+    text-align: right;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.recover a {
+    text-decoration: none;
+    color: rgb(125, 125, 235);
+}
+
+.recover a:hover {
+    color: blue;
+    text-decoration: underline;
+}
+
+button {
+    font-size: 1.1rem;
+    padding: 8px 0;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    width: 100%;
+    background: rgb(125, 125, 235);
+    color: white;
+    cursor: pointer;
+    transition: 0.9s;
+    margin-top: 1rem;
+}
+
+button:hover {
+    background: #07001f;
+}
+
+.or {
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+.icons {
+    text-align: center;
+}
+
+.icons i {
+    color: rgb(125, 125, 235);
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: 2px solid #dfe9f5;
+    margin: 0 15px;
+    transition: 1s;
+}
+
+.icons i:hover {
+    background: #07001f;
+    color: white;
+}
+
+.links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.links p {
+    margin: 0;
+}
+
+.links button {
+    width: auto;
+    padding: 8px 16px;
+    font-size: 1rem;
+    background: #e2e2e2;
+    color: #07001f;
+    border: 1px solid #07001f;
+}
+
+.links button:hover {
+    background: #07001f;
+    color: white;
+}
+
+.message-box {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    display: none;
+}
+/* Add these media queries at the end of your file */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .form-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .form-container h2 {
+        font-size: 1.2rem;
+    }
+
+    .social-icons a {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .form-container input,
+    .form-container button {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    p.mobile-text {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        color: #555;
+    }
+}

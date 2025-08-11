@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Mall Surveillance System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="{{ url_for('static', filename='script.js') }}"></script>
+    <style>
+        /* This style block ensures the video container has a proper aspect ratio */
+        .video-container {
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            position: relative;
+            background-color: #333;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1rem;
+        }
+        .video-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Responsive grid for the dashboard cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+    </style>
+</head>
+<body class="dark-mode">
+    <!-- This div is used to hold the hidden personnel HTML, if needed for a single-page app, but it is not used in this scenario. -->
+    <div id="personnel-overview-html" style="display: none;"></div>
+
+    <button class="sidebar-toggle">
+        <span class="toggle-icon-dots">&#x22EE;</span>
+        <span class="toggle-icon-x" style="display:none;">&times;</span>
+    </button>
+    
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Admin Dashboard</h3>
+                <p class="user-id-display">User ID: <span id="user-id"></span></p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="{{ url_for('admin_overview_page') }}" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="{{ url_for('admin_camera_management_page') }}"><i class="fas fa-video"></i> Camera Management</a></li>
+                    <li><a href="{{ url_for('admin_alerts_page') }}"><i class="fas fa-bell"></i> Alerts</a></li>
+                    <li><a href="{{ url_for('admin_threat_config_page') }}"><i class="fas fa-exclamation-triangle"></i> Threat Config</a></li>
+                    <li><a href="{{ url_for('admin_activity_log_page') }}"><i class="fas fa-history"></i> Activity Log</a></li>
+                    <li><a href="{{ url_for('admin_settings_page') }}"><i class="fas fa-cogs"></i> Settings</a></li>
+                    <li><a href="{{ url_for('logout') }}" id="logout-button"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="dark-mode-toggle" checked>
+                    <span class="slider"></span>
+                </label>
+                <span>Dark Mode</span>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h2>System Overview</h2>
+            </header>
+            
+            <div class="video-container">
+                <!-- This image tag is the key to displaying the stream from the Flask backend -->
+                <img id="live-video" src="{{ url_for('video_feed') }}" alt="Live Video Feed">
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>Status</h3>
+                    <p id="system-status">Loading...</p>
+                </div>
+                <div class="card">
+                    <h3>Alerts Today</h3>
+                    <p id="alerts-today">0</p>
+                </div>
+                <div class="card">
+                    <h3>Threat Level</h3>
+                    <p id="threat-level">Low</p>
+                </div>
+                <div class="card">
+                    <h3>Cameras Active</h3>
+                    <p id="cameras-active">0/0</p>
+                </div>
+                <div class="card full-width">
+                    <h3>Recent Alerts</h3>
+                    <ul id="recent-alerts">
+                        <li>No recent alerts</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Audio element for alert sounds -->
+    <audio id="alert-sound" preload="auto">
+        <source src="{{ url_for('static', filename='police-siren-sound-effect-317645.mp3') }}" type="audio/mpeg">
+    </audio>
+</body>
+</html>

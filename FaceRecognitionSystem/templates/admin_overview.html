@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Overview - Mall Surveillance System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <div class="main-content">
+    <aside class="sidebar">
+      <nav>
+        <h2>Surveillance System</h2>
+        <ul id="sidebar-menu">
+          <li><a href="{{ url_for('admin_overview_page') }}" class="active">Overview</a></li>
+          <li><a href="{{ url_for('admin_camera_management_page') }}">Camera Management</a></li>
+          <li><a href="{{ url_for('admin_alerts_page') }}">Alerts</a></li>
+          <li><a href="{{ url_for('admin_threat_config_page') }}">Detection Config</a></li>
+          <li><a href="{{ url_for('admin_activity_log_page') }}">Activity Logs</a></li>
+          <li><a href="{{ url_for('admin_settings_page') }}">Settings</a></li>
+          <li class="dark-mode-toggle">
+            <label><input type="checkbox" id="dark-mode-toggle" data-i18n="dark_mode"> Dark Mode</label>
+          </li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="content-area">
+      <header>
+        <div class="header-content">
+          <h1 data-i18n="title">AI-BASED SURVEILLANCE SYSTEM</h1>
+        </div>
+      </header>
+
+      <main>
+        <!-- Flash messages from Flask -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flash-messages">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <div class="section">
+          <div class="grid">
+            <div class="card">
+              <h2>Live Camera Feeds</h2>
+              <div class="camera-grid">
+                <div class="camera-feed">
+                  Mall Entrance
+                  <video id="video" width="640" height="480" autoplay></video>
+                  <canvas id="canvas" width="640" height="480" style="position: absolute; top: 0; left: 0;"></canvas>
+                  <div class="detection-overlay" id="detection-overlay"></div>
+                  <p id="system-status">System Initializing...</p>
+                  <p id="alarm-status" class="alarm-indicator" style="display: none;">ALARM! UNKNOWN DETECTED!</p>
+                </div>
+                <div class="camera-feed">Electronics Store (Placeholder)</div>
+              </div>
+            </div>
+            <div class="card">
+              <h2>Active Alerts</h2>
+              <ul class="alerts-list" id="alerts-list">
+                <!-- Alerts will be dynamically inserted here -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <audio id="alert-sound" src="{{ url_for('static', filename='police-siren-sound-effect-317645.mp3') }}" preload="auto"></audio>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

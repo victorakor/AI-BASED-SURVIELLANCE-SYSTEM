@@ -36,6 +36,15 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
+# Python build artifacts
+*.whl
+
+# ... (other ignores)
+
+# Firebase secrets
+firebaseauth.js
+firebase-adminsdk.json
+
 # Unit test / coverage reports
 htmlcov/
 .tox/

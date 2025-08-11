@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Settings - Mall Surveillance System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+    <script type="module" src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <!-- The main container for the entire application -->
+    <div class="app-container">
+        <!-- Sidebar - Stays on the left side of the page -->
+        <aside class="sidebar">
+            <div class="profile">
+                <img src="https://placehold.co/80x80/2C3E50/FFFFFF?text=A" alt="Admin Profile Picture">
+                <p>Admin</p>
+                <p class="user-id-display">User ID: <span id="user-id"></span></p>
+            </div>
+            <nav>
+                <ul id="sidebar-menu">
+                    <li><a href="{{ url_for('admin_overview_page') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="{{ url_for('admin_camera_management_page') }}"><i class="fas fa-video"></i> Camera Management</a></li>
+                    <li><a href="{{ url_for('admin_alerts_page') }}"><i class="fas fa-bell"></i> Alerts</a></li>
+                    <li><a href="{{ url_for('admin_threat_config_page') }}"><i class="fas fa-exclamation-triangle"></i> Threat Configuration</a></li>
+                    <li><a href="{{ url_for('admin_activity_log_page') }}"><i class="fas fa-history"></i> Activity Log</a></li>
+                    <li><a href="{{ url_for('admin_settings_page') }}" class="active"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+            <div class="logout-btn">
+                <a href="{{ url_for('logout') }}" id="logout-button"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+            <div class="dark-mode-toggle">
+                <label><input type="checkbox" id="dark-mode-toggle"> Dark Mode</label>
+            </div>
+        </aside>
+
+        <!-- Main content area - Stays on the right side of the page -->
+        <div class="main-content">
+            <header>
+                <h1>Settings</h1>
+            </header>
+            <main>
+                <section class="settings-form card">
+                    <h2>Change Password</h2>
+                    <form id="change-password-form">
+                        <div class="form-group">
+                            <label for="current-password">Current Password:</label>
+                            <input type="password" id="current-password" name="current-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-password">New Password:</label>
+                            <input type="password" id="new-password" name="new-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm New Password:</label>
+                            <input type="password" id="confirm-password" name="confirm-password" required>
+                        </div>
+                        <button type="submit" class="save-button">Change Password</button>
+                    </form>
+                </section>
+                <section class="settings-form card">
+                    <h2>System Settings</h2>
+                    <div class="form-group">
+                        <label for="detection-threshold">Detection Threshold:</label>
+                        <input type="range" id="detection-threshold" min="0.1" max="1.0" step="0.1" value="0.5">
+                        <span id="threshold-value">0.5</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="alert-cooldown">Alert Cooldown (minutes):</label>
+                        <input type="number" id="alert-cooldown" min="1" max="60" value="5">
+                    </div>
+                    <button id="save-system-settings" class="save-button">Save Settings</button>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
